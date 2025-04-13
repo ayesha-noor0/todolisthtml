@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ToDo List | Ayesha Noor</title>
+
+<style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #1f2937; 
+      color: #f9f9f9;
+    }
+    
+   
+    header {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    
+    header h1 {
+      font-size: 28px;
+      margin: 8px 0;
+      animation: fadeSlideIn 1s forwards;
+    }
+    
+    header p {
+      font-size: 16px;
+      animation: fadeSlideIn 1s forwards;
+      animation-delay: 0.6s;
+    }
+    
+   
+    @keyframes fadeSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+  
+    nav {
+      background: #111827;
+      display: flex;
+      justify-content: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    
+    nav button {
+      background: none;
+      border: none;
+      color: white;
+      padding: 14px 24px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+    
+    nav button:hover {
+      background: #1f2937;
+      transform: scale(1.08);
+    }
+    
+  
+    .container {
+      display: none;
+      padding: 30px;
+      max-width: 800px;
+      margin: auto;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      opacity: 0;
+      transform: scale(0.97);
+    }
+    
+    .container.active {
+      display: block;
+      opacity: 1;
+      transform: scale(1);
+    }
+    
+    
+    .form-group {
+      margin-bottom: 14px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+      color: #10b981;
+    }
+    
+    input, select {
+      padding: 10px;
+      width: 100%;
+      background: #111827;
+      color: white;
+      border: 1px solid #374151;
+      border-radius: 6px;
+      outline: none;
+      transition: border 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    input:focus, select:focus {
+      border-color: #10b981;
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3);
+    }
+    
+  
+    .btn {
+      background: #10b981;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 10px;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+    
+    .btn:hover {
+      background: #059669;
+      transform: scale(1.05);
+    }
+    
+   
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: #1f2937;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #374151;
+      text-align: center;
+      color: #e5e7eb;
+    }
+    
+    th {
+      background: #111827;
+      color: #10b981;
+    }
+    
+  
+    .message {
+      margin-top: 12px;
+      color: #10b981;
+      font-weight: bold;
+    }
+    </style>  
+</head>
+<body>
+
+<header>
+  <h1><strong>Name:</strong> Ayesha Noor</h1>
+  <h1><strong>Roll No:</strong> 22011598-048</h1>
+  <p><strong>This is a Full-featured To-Do List Dashboard</strong></p>
+</header>
+
+<nav>
+  <button onclick="showSection('add')">Add</button>
+  <button onclick="showSection('update')">Update</button>
+  <button onclick="showSection('delete')">Delete</button>
+  <button onclick="showSection('search')">Search</button>
+  <button onclick="showSection('show')">Show</button>
+</nav>
+
+
+<div class="container" id="add">
+  <h2>Add Record</h2>
+  <div class="form-group">
+    <label>ID:</label>
+    <input type="text" id="addId">
+  </div>
+  <div class="form-group">
+    <label>Name:</label>
+    <input type="text" id="addName">
+  </div>
+  <div class="form-group">
+    <label>Age:</label>
+    <input type="number" id="addAge">
+  </div>
+  <div class="form-group">
+    <label>Gender:</label>
+    <select id="addGender">
+      <option value="">Select</option>
+      <option>Male</option>
+      <option>Female</option>
+    </select>
+  </div>
+  <button class="btn" onclick="addRecord()">Add</button>
+  <p class="message" id="addMsg"></p>
+</div>
+
+<div class="container" id="update">
+  <h2>Update Record by ID</h2>
+  <div class="form-group">
+    <label>Enter ID to Update:</label>
+    <input type="text" id="updateIdSearch">
+  </div>
+  <div class="form-group">
+    <label>New Name:</label>
+    <input type="text" id="updateName">
+  </div>
+  <div class="form-group">
+    <label>New Age:</label>
+    <input type="number" id="updateAge">
+  </div>
+  <div class="form-group">
+    <label>New Gender:</label>
+    <select id="updateGender">
+      <option value="">Select</option>
+      <option>Male</option>
+      <option>Female</option>
+    </select>
+  </div>
+  <button class="btn" onclick="updateRecord()">Update</button>
+  <p class="message" id="updateMsg"></p>
+</div>
+
+<div class="container" id="delete">
+  <h2>Delete Record by ID</h2>
+  <div class="form-group">
+    <label>ID:</label>
+    <input type="text" id="deleteId">
+  </div>
+  <button class="btn" onclick="deleteRecord()">Delete</button>
+  <p class="message" id="deleteMsg"></p>
+</div>
+
+
+<div class="container" id="search">
+  <h2>Search Record by ID</h2>
+  <div class="form-group">
+    <label>ID:</label>
+    <input type="text" id="searchId">
+  </div>
+  <button class="btn" onclick="searchRecord()">Search</button>
+  <p class="message" id="searchMsg"></p>
+</div>
+
+<div class="container" id="show">
+  <h2>All Records</h2>
+  <table id="dataTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Gender</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<script>
+  let records = [];
+
+  function showSection(sectionId) {
+    document.querySelectorAll('.container').forEach(section => {
+      section.classList.remove('active');
+    });
+    document.getElementById(sectionId).classList.add('active');
+  }
+
+  function addRecord() {
+    const id = document.getElementById("addId").value;
+    const name = document.getElementById("addName").value;
+    const age = document.getElementById("addAge").value;
+    const gender = document.getElementById("addGender").value;
+
+    if (!id || !name || !age || !gender) {
+      alert("Please fill all fields!");
+      return;
+    }
+
+    if (records.some(r => r.id === id)) {
+      alert("ID already exists!");
+      return;
+    }
+
+    records.push({ id, name, age, gender });
+    document.getElementById("addMsg").innerText = "Record added successfully!";
+    refreshTable();
+    clearFields('add');
+  }
+
+  function updateRecord() {
+    const id = document.getElementById("updateIdSearch").value;
+    const name = document.getElementById("updateName").value;
+    const age = document.getElementById("updateAge").value;
+    const gender = document.getElementById("updateGender").value;
+
+    const index = records.findIndex(r => r.id === id);
+    if (index === -1) {
+      document.getElementById("updateMsg").innerText = "Record not found!";
+      return;
+    }
+
+    if (name) records[index].name = name;
+    if (age) records[index].age = age;
+    if (gender) records[index].gender = gender;
+
+    document.getElementById("updateMsg").innerText = "Record updated!";
+    refreshTable();
+    clearFields('update');
+  }
+
+  function deleteRecord() {
+    const id = document.getElementById("deleteId").value;
+    const index = records.findIndex(r => r.id === id);
+    if (index === -1) {
+      document.getElementById("deleteMsg").innerText = "Record not found!";
+      return;
+    }
+    records.splice(index, 1);
+    document.getElementById("deleteMsg").innerText = "Record deleted!";
+    refreshTable();
+    clearFields('delete');
+  }
+
+  function searchRecord() {
+    const id = document.getElementById("searchId").value;
+    const record = records.find(r => r.id === id);
+    document.getElementById("searchMsg").innerText = record
+      ? `Found: ${record.name}, Age: ${record.age}, Gender: ${record.gender}`
+      : "Record not found!";
+  }
+
+  function refreshTable() {
+    const tbody = document.getElementById("dataTable").querySelector("tbody");
+    tbody.innerHTML = "";
+    records.forEach(r => {
+      const row = `<tr>
+        <td>${r.id}</td>
+        <td>${r.name}</td>
+        <td>${r.age}</td>
+        <td>${r.gender}</td>
+      </tr>`;
+      tbody.innerHTML += row;
+    });
+  }
+
+  function clearFields(section) {
+    const inputs = document.querySelectorAll(`#${section} input, #${section} select`);
+    inputs.forEach(input => input.value = '');
+  }
+
+  showSection('add');
+</script>
+
+</body>
+</html>
